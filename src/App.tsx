@@ -281,8 +281,8 @@ export default function App() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="absolute text-left"
-          style={{ top: '68%', left: 'calc(50% - 250px)', zIndex: 10 }}
+          className="absolute text-right"
+          style={{ top: '72%', left: 'calc(50% - 280px)', zIndex: 10 }}
         >
           <div className="text-5xl md:text-7xl font-display font-black tracking-tighter text-white/90">{count50}+</div>
           <div className="text-[9px] uppercase tracking-[0.3em] font-bold text-white/30">AI Deployments</div>
@@ -294,8 +294,8 @@ export default function App() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.4 }}
-          className="absolute text-right"
-          style={{ top: '52%', left: 'calc(50% + 120px)', zIndex: 10 }}
+          className="absolute text-left"
+          style={{ top: '58%', left: 'calc(50% + 120px)', zIndex: 10 }}
         >
           <div className="text-5xl md:text-7xl font-display font-black tracking-tighter text-white/90">{count10}X</div>
           <div className="text-[9px] uppercase tracking-[0.3em] font-bold text-white/30">Revenue Impact</div>
