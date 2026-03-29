@@ -205,11 +205,12 @@ export default function App() {
 
         {/* Orange Pillar Bar */}
         <motion.div
-          className="absolute left-1/2 -translate-x-1/2 z-10"
+          className="absolute left-1/2 -translate-x-1/2"
           style={{
             top: '52%',
             height: '48%',
             width: '140px',
+            zIndex: 10,
             borderRadius: '4px',
             background: 'linear-gradient(to bottom, rgba(255,100,20,0.88), rgba(255,45,0,0.96), rgba(190,15,0,0.9))',
             boxShadow: '0 0 35px rgba(255,60,0,0.9), 0 0 80px rgba(255,40,0,0.55), 0 0 160px rgba(255,20,0,0.25)',
@@ -229,13 +230,15 @@ export default function App() {
             <img
               src="/clouds-hero.jpg"
               alt="Background Cloud"
-              className="absolute left-1/2 top-1/4 -translate-x-1/2 w-[120%] h-full object-cover opacity-20 mix-blend-screen"
+              className="opacity-20 mix-blend-screen"
               referrerPolicy="no-referrer"
               style={{
-                filter: 'brightness(0.32) saturate(0.9) sepia(0.7) hue-rotate(-20deg) contrast(1.1)',
-                objectFit: 'cover',
+                position: 'absolute',
+                inset: 0,
                 width: '100%',
-                height: '100%'
+                height: '100%',
+                objectFit: 'cover',
+                filter: 'brightness(0.32) saturate(0.9) sepia(0.7) hue-rotate(-20deg) contrast(1.1)'
               }}
             />
           </motion.div>
@@ -248,13 +251,15 @@ export default function App() {
             <img
               src="/clouds-hero.jpg"
               alt="Cloud Left"
-              className="absolute -left-[15%] bottom-0 w-[90%] h-[80%] object-cover opacity-70 mix-blend-screen"
+              className="opacity-70 mix-blend-screen"
               referrerPolicy="no-referrer"
               style={{
-                filter: 'brightness(0.32) saturate(0.9) sepia(0.7) hue-rotate(-20deg) contrast(1.1)',
-                objectFit: 'cover',
+                position: 'absolute',
+                inset: 0,
                 width: '100%',
-                height: '100%'
+                height: '100%',
+                objectFit: 'cover',
+                filter: 'brightness(0.32) saturate(0.9) sepia(0.7) hue-rotate(-20deg) contrast(1.1)'
               }}
             />
             {/* Orange highlight on cloud edge */}
@@ -269,13 +274,16 @@ export default function App() {
             <img
               src="/clouds-hero.jpg"
               alt="Cloud Right"
-              className="absolute -right-[15%] bottom-0 w-[90%] h-[80%] object-cover opacity-70 mix-blend-screen scale-x-[-1]"
+              className="opacity-70 mix-blend-screen"
               referrerPolicy="no-referrer"
               style={{
-                filter: 'brightness(0.32) saturate(0.9) sepia(0.7) hue-rotate(-20deg) contrast(1.1)',
-                objectFit: 'cover',
+                position: 'absolute',
+                inset: 0,
                 width: '100%',
-                height: '100%'
+                height: '100%',
+                objectFit: 'cover',
+                filter: 'brightness(0.32) saturate(0.9) sepia(0.7) hue-rotate(-20deg) contrast(1.1)',
+                transform: 'scaleX(-1)'
               }}
             />
             {/* Orange highlight on cloud edge */}
@@ -299,61 +307,29 @@ export default function App() {
             <div className={`text-[9px] uppercase tracking-[0.3em] font-bold ${isDarkMode ? 'text-white/30' : 'text-black/30'}`}>AI Deployments</div>
           </motion.div>
 
-          <div className="pb-4">
-            <div className="relative group">
-              {/* Water Ripple Effect */}
-              <motion.div 
-                animate={{ 
-                  scale: [1, 1.8, 1],
-                  opacity: [0.4, 0, 0.4]
-                }}
-                transition={{ 
-                  duration: 3, 
-                  repeat: Infinity, 
-                  ease: "easeInOut" 
-                }}
-                className="absolute inset-0 bg-brand-orange/30 rounded-full blur-2xl"
-              />
-              <motion.div 
-                animate={{ 
-                  scale: [1, 2.2, 1],
-                  opacity: [0.2, 0, 0.2]
-                }}
-                transition={{ 
-                  duration: 4, 
-                  repeat: Infinity, 
-                  ease: "easeInOut",
-                  delay: 1
-                }}
-                className="absolute inset-0 bg-brand-orange/10 rounded-full blur-3xl"
-              />
-              
-              <motion.button 
-                animate={{ 
-                  y: [0, -10, 0],
-                }}
-                transition={{ 
-                  duration: 4, 
-                  repeat: Infinity, 
-                  ease: "easeInOut" 
-                }}
-                whileHover={{ 
-                  scale: 1.1, 
-                  backgroundColor: isDarkMode ? "rgba(255, 255, 255, 0.15)" : "rgba(0, 0, 0, 0.05)",
-                  boxShadow: "0 0 40px rgba(255, 77, 0, 0.4)"
-                }}
-                whileTap={{ scale: 0.9 }}
-                onClick={() => scrollToSection('contact')}
-                className={`relative z-10 px-14 py-6 rounded-full border-2 backdrop-blur-xl text-[14px] md:text-[16px] uppercase tracking-[0.7em] font-black transition-all duration-500 ${
-                  isDarkMode 
-                    ? 'border-white/30 bg-white/5 text-white shadow-[0_0_50px_rgba(255,255,255,0.1)] hover:border-brand-orange' 
-                    : 'border-black/30 bg-black/5 text-black shadow-[0_0_50px_rgba(0,0,0,0.05)] hover:border-brand-orange'
-                }`}
-              >
-                Get in touch
-              </motion.button>
-            </div>
-          </div>
+          <motion.a
+            href="#solutions"
+            style={{
+              position: 'absolute',
+              bottom: '7%',
+              left: '50%',
+              transform: 'translateX(-50%)',
+              color: 'rgba(255,120,50,0.85)',
+              fontSize: '10px',
+              letterSpacing: '0.32em',
+              textTransform: 'uppercase' as const,
+              borderBottom: '1px solid rgba(255,120,50,0.45)',
+              paddingBottom: '2px',
+              textDecoration: 'none',
+              whiteSpace: 'nowrap' as const,
+              zIndex: 20,
+            }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 2 }}
+          >
+            Discover More
+          </motion.a>
 
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
