@@ -13,7 +13,47 @@ export default function App() {
   const [isDarkMode, setIsDarkMode] = useState(true);
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
-  
+  const [count50, setCount50] = useState(0);
+  const [count10, setCount10] = useState(0);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      let start = 0;
+      const end = 50;
+      const duration = 1500;
+      const increment = end / (duration / 16);
+      const counter = setInterval(() => {
+        start += increment;
+        if (start >= end) {
+          setCount50(end);
+          clearInterval(counter);
+        } else {
+          setCount50(Math.floor(start));
+        }
+      }, 16);
+    }, 1200);
+    return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      let start = 0;
+      const end = 10;
+      const duration = 1200;
+      const increment = end / (duration / 16);
+      const counter = setInterval(() => {
+        start += increment;
+        if (start >= end) {
+          setCount10(end);
+          clearInterval(counter);
+        } else {
+          setCount10(Math.floor(start));
+        }
+      }, 16);
+    }, 1500);
+    return () => clearTimeout(timer);
+  }, []);
+
   const testimonials = [
     { quote: "Previewlabs transformed our data strategy. Their AI framework is years ahead of anything we've seen.", name: "Sarah Chen", company: "TechFlow Systems" },
     { quote: "The speed of deployment and the depth of insights provided by their team is unparalleled.", name: "Marcus Thorne", company: "Global Logistics" },
@@ -213,7 +253,7 @@ export default function App() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1] }}
           >
-            <h1 className={`font-display font-black tracking-tighter mb-8 uppercase ${isDarkMode ? 'text-white' : 'text-black'}`} style={{ fontSize: 'clamp(2.2rem, 5.5vw, 5rem)', lineHeight: '1.05' }}>
+            <h1 className="font-display font-black tracking-tighter mb-8 uppercase" style={{ fontSize: 'clamp(2.2rem, 5.5vw, 5rem)', lineHeight: '1.05', color: '#ffffff' }}>
               AI Systems <br />
               Built to Run <br />
               Your Business
@@ -225,7 +265,7 @@ export default function App() {
             animate={{ opacity: 1 }}
             transition={{ duration: 1.5, delay: 0.8 }}
           >
-            <p className={`text-[11px] md:text-sm uppercase tracking-[0.5em] font-bold leading-relaxed ${isDarkMode ? 'text-white/50' : 'text-black/50'}`}>
+            <p className="uppercase font-bold leading-relaxed" style={{ color: 'rgba(255, 255, 255, 0.75)', fontSize: '13px', letterSpacing: '0.2em', textShadow: '0 1px 20px rgba(0,0,0,0.8)' }}>
               We engineer AI that handles the work <br />
               — so your team doesn't have to
             </p>
@@ -261,7 +301,7 @@ export default function App() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="text-left"
           >
-            <div className={`text-5xl md:text-7xl font-display font-black tracking-tighter ${isDarkMode ? 'text-white/90' : 'text-black/90'}`}>50+</div>
+            <div className={`text-5xl md:text-7xl font-display font-black tracking-tighter ${isDarkMode ? 'text-white/90' : 'text-black/90'}`}>{count50}+</div>
             <div className={`text-[9px] uppercase tracking-[0.3em] font-bold ${isDarkMode ? 'text-white/30' : 'text-black/30'}`}>AI Deployments</div>
           </motion.div>
 
@@ -294,7 +334,7 @@ export default function App() {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="text-right"
           >
-            <div className={`text-5xl md:text-7xl font-display font-black tracking-tighter ${isDarkMode ? 'text-white/90' : 'text-black/90'}`}>10X</div>
+            <div className={`text-5xl md:text-7xl font-display font-black tracking-tighter ${isDarkMode ? 'text-white/90' : 'text-black/90'}`}>{count10}X</div>
             <div className={`text-[9px] uppercase tracking-[0.3em] font-bold ${isDarkMode ? 'text-white/30' : 'text-black/30'}`}>Revenue Impact</div>
           </motion.div>
         </div>
