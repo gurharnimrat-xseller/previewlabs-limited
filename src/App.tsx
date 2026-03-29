@@ -5,8 +5,7 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, useScroll, useTransform, useAnimation, AnimatePresence, useSpring } from 'motion/react';
-import { Hexagon, Menu, X, ChevronDown, Sun, Moon } from 'lucide-react';
-import PainNarrative from './PainNarrative';
+import { Hexagon, Menu, X, ChevronDown } from 'lucide-react';
 
 export default function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -54,10 +53,6 @@ export default function App() {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
-  const toggleTheme = () => {
-    setIsDarkMode(!isDarkMode);
-  };
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
@@ -113,7 +108,7 @@ export default function App() {
   };
 
   return (
-    <div ref={containerRef} className={`relative min-h-[500vh] transition-colors duration-700 ${isDarkMode ? 'bg-[#050505] text-white' : 'bg-[#f5f5f5] text-[#050505]'} overflow-x-hidden selection:bg-brand-orange selection:text-white font-sans`}>
+    <div ref={containerRef} className={`relative min-h-[500vh] transition-colors duration-700 ${isDarkMode ? 'bg-[#0A0A0A] text-white' : 'bg-[#f5f5f5] text-[#050505]'} overflow-x-hidden selection:bg-brand-orange selection:text-white font-sans`}>
       {/* Grainy Texture */}
       <div className={`grainy-bg transition-opacity duration-700 ${isDarkMode ? 'opacity-100' : 'opacity-20'}`} />
       
@@ -133,51 +128,32 @@ export default function App() {
             <div className="w-10 h-10 bg-brand-orange rounded-xl flex items-center justify-center font-display font-black text-white text-xl shadow-[0_0_20px_rgba(255,77,0,0.4)]">P.</div>
             <span className={`hidden sm:block font-display font-black text-lg tracking-tighter uppercase ${isDarkMode ? 'text-white' : 'text-black'}`}>Previewlabs</span>
           </div>
-          <div className={`hidden md:flex items-center gap-8 text-[11px] uppercase tracking-[0.3em] font-black ${isDarkMode ? 'text-white/80' : 'text-black/80'}`}>
-            {[{ label: 'Solutions', id: 'features' }, { label: 'Xseller.ai', id: 'services' }, { label: 'About', id: 'team' }, { label: 'Contact', id: 'contact' }].map((item) => (
-              <button
-                key={item.label}
-                onClick={() => scrollToSection(item.id)}
-                className="hover:text-brand-orange transition-all duration-300 relative group"
-              >
-                {item.label}
-                <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-brand-orange transition-all duration-300 group-hover:w-full" />
-              </button>
-            ))}
+          <div className="hidden md:flex items-center gap-8 text-[11px] uppercase tracking-[0.3em] font-black text-white/80">
+            <a href="#features" className="hover:text-brand-orange transition-all duration-300 relative group">
+              Solutions
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-brand-orange transition-all duration-300 group-hover:w-full" />
+            </a>
+            <a href="#about" className="hover:text-brand-orange transition-all duration-300 relative group">
+              About
+              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-brand-orange transition-all duration-300 group-hover:w-full" />
+            </a>
           </div>
 
           {/* Header CTA Button */}
-          <motion.button 
-            whileHover={{ scale: 1.05, backgroundColor: "#FF4D00", color: "#FFFFFF" }}
+          <motion.a
+            href="#contact"
+            whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            onClick={() => scrollToSection('contact')}
-            className={`hidden md:block px-6 py-2.5 rounded-full border text-[10px] uppercase tracking-[0.3em] font-black transition-all duration-300 ${
-              isDarkMode ? 'border-white/20 text-white' : 'border-black/20 text-black'
-            }`}
+            className="hidden md:block px-6 py-2.5 rounded-full text-[10px] uppercase tracking-[0.3em] font-black text-white"
+            style={{
+              background: 'linear-gradient(to right, #FF4D00, #CC2200)',
+              textDecoration: 'none',
+            }}
           >
-            Get Started
-          </motion.button>
+            Get In Touch
+          </motion.a>
 
-          {/* Theme Toggle Button */}
-          <button 
-            onClick={toggleTheme}
-            className={`p-2 rounded-full transition-all duration-500 ${isDarkMode ? 'bg-white/10 text-white hover:bg-white/20' : 'bg-black/10 text-black hover:bg-black/20'}`}
-            aria-label="Toggle theme"
-          >
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={isDarkMode ? 'dark' : 'light'}
-                initial={{ rotate: -90, opacity: 0, scale: 0.5 }}
-                animate={{ rotate: 0, opacity: 1, scale: 1 }}
-                exit={{ rotate: 90, opacity: 0, scale: 0.5 }}
-                transition={{ duration: 0.3 }}
-              >
-                {isDarkMode ? <Sun size={18} /> : <Moon size={18} />}
-              </motion.div>
-            </AnimatePresence>
-          </button>
-
-          <button 
+          <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             className={isDarkMode ? 'md:hidden text-white' : 'md:hidden text-black'}
           >
@@ -231,24 +207,28 @@ export default function App() {
           }}
         />
 
-        {/* Landing Animation Wrapper */}
+        {/* Headline + Subheadline — upper 35-40% of viewport */}
         <div
-          className="relative z-[10] flex flex-col items-center justify-center text-center px-6"
-          style={{
-            height: '100%',
-            paddingTop: '80px',
-            paddingBottom: '120px',
-            maxWidth: '900px',
-            margin: '0 auto',
-            gap: '16px',
-          }}
+          className="absolute left-0 right-0 flex flex-col items-center text-center px-6"
+          style={{ top: '12%', zIndex: 10 }}
         >
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1] }}
           >
-            <h1 className="font-display font-black uppercase" style={{ fontSize: 'clamp(2.4rem, 5vw, 3.825rem)', lineHeight: '1.08', letterSpacing: '-0.01em', textAlign: 'center', color: '#ffffff', marginBottom: '0', WebkitTextFillColor: '#ffffff' }}>
+            <h1
+              className="font-display font-black uppercase"
+              style={{
+                fontSize: 'clamp(2.4rem, 5vw, 3.825rem)',
+                lineHeight: '1.08',
+                letterSpacing: '-0.01em',
+                textAlign: 'center',
+                color: '#ffffff',
+                WebkitTextFillColor: '#ffffff',
+                marginBottom: '0',
+              }}
+            >
               AI Systems <br />
               Built to Run <br />
               Your Business
@@ -259,20 +239,32 @@ export default function App() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1.5, delay: 0.8 }}
+            style={{ marginTop: '1.5rem' }}
           >
-            <p className="uppercase font-bold" style={{ fontSize: '13px', letterSpacing: '0.18em', color: 'rgba(255,255,255,0.72)', textAlign: 'center', maxWidth: '480px', lineHeight: '2', marginTop: '0', textShadow: '0 1px 20px rgba(0,0,0,0.8)' }}>
+            <p
+              className="uppercase font-bold"
+              style={{
+                fontSize: '13px',
+                letterSpacing: '0.18em',
+                color: 'rgba(255,255,255,0.72)',
+                textAlign: 'center',
+                maxWidth: '480px',
+                lineHeight: '2',
+                textShadow: '0 1px 20px rgba(0,0,0,0.8)',
+              }}
+            >
               We engineer AI that handles the work <br />
               — so your team doesn't have to
             </p>
           </motion.div>
         </div>
 
-        {/* Orange Pillar Bar */}
+        {/* Orange Pillar Bar — starts at 50%, extends to bottom */}
         <motion.div
           className="absolute left-1/2 -translate-x-1/2"
           style={{
-            top: '52%',
-            height: '48%',
+            top: '50%',
+            height: '50%',
             width: '140px',
             zIndex: 5,
             borderRadius: '4px',
@@ -286,81 +278,70 @@ export default function App() {
         />
 
         {/* Bottom Mist & Grounding */}
-        <div className="absolute bottom-0 w-full h-1/2 bg-gradient-to-t from-[#050505] via-[#050505]/90 to-transparent z-[2] pointer-events-none" />
+        <div className="absolute bottom-0 w-full h-1/2 bg-gradient-to-t from-[#0A0A0A] via-[#0A0A0A]/90 to-transparent z-[2] pointer-events-none" />
 
-        {/* 50+ Stat */}
+        {/* 50+ Stat — left of pillar, ~65% down */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="absolute text-left z-50"
-          style={{ bottom: '18%', left: '8%' }}
+          className="absolute text-left"
+          style={{ top: '65%', left: '8%', zIndex: 10 }}
         >
           <div className="text-5xl md:text-7xl font-display font-black tracking-tighter text-white/90">{count50}+</div>
           <div className="text-[9px] uppercase tracking-[0.3em] font-bold text-white/30">AI Deployments</div>
         </motion.div>
 
-        {/* 10X Stat */}
+        {/* 10X Stat — right of pillar, ~55% down */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.4 }}
-          className="absolute text-right z-50"
-          style={{ bottom: '26%', right: '8%' }}
+          className="absolute text-right"
+          style={{ top: '55%', right: '8%', zIndex: 10 }}
         >
           <div className="text-5xl md:text-7xl font-display font-black tracking-tighter text-white/90">{count10}X</div>
           <div className="text-[9px] uppercase tracking-[0.3em] font-bold text-white/30">Revenue Impact</div>
         </motion.div>
 
-        {/* CTA Button */}
+        {/* CTA Button — bottom center, small and clean */}
         <motion.a
           href="#contact"
-          className="inline-flex items-center gap-2 px-8 py-4 rounded-full text-white font-medium text-sm tracking-widest uppercase absolute z-50"
+          className="absolute px-6 py-3 rounded-full text-white font-medium text-xs tracking-widest uppercase"
           style={{
             background: 'linear-gradient(135deg, #FF4D00, #CC2200)',
-            boxShadow: '0 0 30px rgba(255,77,0,0.4)',
-            bottom: '6%',
+            boxShadow: '0 0 20px rgba(255,77,0,0.3)',
+            bottom: '8%',
             left: '50%',
             transform: 'translateX(-50%)',
             whiteSpace: 'nowrap' as const,
             textDecoration: 'none',
+            zIndex: 10,
           }}
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 1.8 }}
-          whileHover={{ scale: 1.04, boxShadow: '0 0 45px rgba(255,77,0,0.6)' }}
+          whileHover={{ scale: 1.04, boxShadow: '0 0 35px rgba(255,77,0,0.5)' }}
         >
           Get In Touch →
         </motion.a>
 
-        {/* Orange radial glow at base */}
-        <div
-          className="absolute bottom-0 left-1/2 -translate-x-1/2 pointer-events-none z-[3]"
-          style={{
-            width: '1000px',
-            height: '520px',
-            background: 'radial-gradient(ellipse at 50% 100%, rgba(255,55,0,0.45) 0%, rgba(200,30,0,0.18) 42%, transparent 70%)',
-            filter: 'blur(10px)',
-          }}
-        />
       </motion.section>
 
-      <PainNarrative />
-
       {/* Content Section */}
-      <section id="features" className="relative z-[60] py-64 px-6 max-w-7xl mx-auto">
+      <section id="features" className="relative z-[60] py-16 px-6 max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 100, rotateX: 15 }}
           whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
           viewport={{ once: true, margin: "-150px" }}
           transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1] }}
-          className="text-center mb-24"
+          className="text-center mb-10"
         >
-          <h2 className="text-6xl md:text-8xl font-display font-black tracking-tighter mb-12 uppercase leading-[0.85] drop-shadow-2xl text-white">
+          <h2 className="text-6xl md:text-8xl font-display font-black tracking-tighter mb-4 uppercase leading-[0.85] drop-shadow-2xl text-white">
             What We <br />
-            <span className="text-brand-orange drop-shadow-[0_0_30px_rgba(255,77,0,0.4)]">Build</span>
+            Build
           </h2>
         </motion.div>
 
@@ -391,19 +372,20 @@ export default function App() {
       </section>
 
       {/* Workflow Section: Identify, Develop, Adopt */}
-      <section id="services" className={`relative z-[60] py-64 px-6 max-w-7xl mx-auto border-t ${isDarkMode ? 'border-white/5' : 'border-black/5'}`}>
-        <div className="text-center mb-32">
-          <h2 className={`text-5xl md:text-8xl font-display font-black tracking-tighter uppercase mb-8 ${isDarkMode ? 'text-white' : 'text-black'}`}>How We Work</h2>
+      <section id="services" className={`relative z-[60] py-16 px-6 max-w-7xl mx-auto border-t ${isDarkMode ? 'border-white/5' : 'border-black/5'}`}>
+        <div className="text-center mb-10">
+          <h2 className={`text-5xl md:text-8xl font-display font-black tracking-tighter uppercase mb-4 ${isDarkMode ? 'text-white' : 'text-black'}`}>How We Work</h2>
           <p className={`max-w-2xl mx-auto text-xl font-medium ${isDarkMode ? 'text-white/40' : 'text-black/40'}`}>
-            A focused three-step process. No fluff. No 12-month roadmaps.
+            A focused four-step process. No fluff. No 12-month roadmaps.
           </p>
         </div>
-        
-        <div className="grid md:grid-cols-3 gap-12">
+
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-12">
           {[
-            { title: "Discover", desc: "We audit your current operations and find the automation opportunities with the highest ROI. We talk to the people doing the work — not just the people buying the tools.", icon: "01" },
-            { title: "Build", desc: "We engineer custom AI systems fitted to your actual workflow. Not off-the-shelf templates. Real systems, tested and deployed.", icon: "02" },
-            { title: "Launch", desc: "We deploy, train your team, and stay on for optimisation. By the time we step back, it's not a project — it's just how your business runs.", icon: "03" }
+            { title: "Discover", desc: "We audit your current operations and find the automation opportunities with the highest ROI.", icon: "01" },
+            { title: "Build", desc: "We engineer custom AI systems fitted to your actual workflow. Not off-the-shelf templates.", icon: "02" },
+            { title: "Launch", desc: "We deploy your system into production and go live. Real environments, real data, real users.", icon: "03" },
+            { title: "Train & Optimise", desc: "We train your team, monitor performance, and optimise until the system runs without us.", icon: "04" }
           ].map((card, i) => (
             <motion.div 
               key={i}
@@ -426,7 +408,7 @@ export default function App() {
       </section>
 
       {/* About Section */}
-      <section id="team" className={`relative z-[60] px-6 border-t ${isDarkMode ? 'border-white/5' : 'border-black/5'}`} style={{ paddingTop: '6rem', paddingBottom: '6rem' }}>
+      <section id="team" className={`relative z-[60] px-6 border-t ${isDarkMode ? 'border-white/5' : 'border-black/5'}`} style={{ paddingTop: '4rem', paddingBottom: '4rem' }}>
         <div style={{ maxWidth: '700px', marginLeft: 'auto', marginRight: 'auto' }}>
           <h2 className={`text-5xl md:text-8xl font-display font-black tracking-tighter uppercase mb-12 ${isDarkMode ? 'text-white' : 'text-black'}`}>Who We Are</h2>
           <p className={`text-xl leading-relaxed font-medium mb-8 ${isDarkMode ? 'text-white/60' : 'text-black/60'}`}>
@@ -439,7 +421,7 @@ export default function App() {
       </section>
 
       {/* Contact Section Placeholder */}
-      <section id="contact" className={`relative z-[60] py-64 px-6 max-w-7xl mx-auto border-t ${isDarkMode ? 'border-white/5' : 'border-black/5'}`}>
+      <section id="contact" className={`relative z-[60] py-16 px-6 max-w-7xl mx-auto border-t ${isDarkMode ? 'border-white/5' : 'border-black/5'}`}>
         <div className={`rounded-[4rem] p-16 md:p-32 text-center border ${isDarkMode ? 'bg-brand-orange/10 border-brand-orange/20' : 'bg-brand-orange/5 border-brand-orange/10'}`}>
           <h2 className={`text-5xl md:text-8xl font-display font-black tracking-tighter uppercase mb-12 ${isDarkMode ? 'text-white' : 'text-black'}`}>Ready to automate your operations?</h2>
           <p className={`text-xl mb-16 max-w-2xl mx-auto font-medium ${isDarkMode ? 'text-white/60' : 'text-black/60'}`}>
@@ -452,7 +434,7 @@ export default function App() {
       </section>
 
       {/* Footer */}
-      <footer className={`relative z-[60] py-16 px-6 border-t backdrop-blur-xl ${isDarkMode ? 'border-white/10 bg-black/40' : 'border-black/10 bg-white/40'}`}>
+      <footer className={`relative z-[60] py-16 px-6 border-t ${isDarkMode ? 'border-white/10 bg-[#0A0A0A]' : 'border-black/10 bg-white/40'}`}>
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-12">
           <div className="flex flex-col gap-3">
             <div className="flex items-center gap-4">
@@ -484,7 +466,7 @@ export default function App() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: "-100%" }}
             transition={{ type: "spring", damping: 30, stiffness: 300 }}
-            className={`fixed inset-0 z-[100] flex flex-col items-center justify-center gap-16 ${isDarkMode ? 'bg-[#050505]' : 'bg-[#f5f5f5]'}`}
+            className={`fixed inset-0 z-[100] flex flex-col items-center justify-center gap-16 ${isDarkMode ? 'bg-[#0A0A0A]' : 'bg-[#f5f5f5]'}`}
           >
             <button 
               onClick={() => setIsMenuOpen(false)}
@@ -492,7 +474,7 @@ export default function App() {
             >
               <X size={48} />
             </button>
-            {[{ label: 'Solutions', id: 'features' }, { label: 'Xseller.ai', id: 'services' }, { label: 'About', id: 'team' }, { label: 'Contact', id: 'contact' }].map((item) => (
+            {[{ label: 'Solutions', id: 'features' }, { label: 'About', id: 'about' }, { label: 'Get In Touch', id: 'contact' }].map((item) => (
               <button
                 key={item.label}
                 onClick={() => scrollToSection(item.id)}
