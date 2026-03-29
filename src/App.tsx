@@ -13,45 +13,38 @@ export default function App() {
   const [isDarkMode, setIsDarkMode] = useState(true);
   const [currentTestimonial, setCurrentTestimonial] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
+  const heroRef = useRef<HTMLElement>(null);
   const [count50, setCount50] = useState(0);
   const [count10, setCount10] = useState(0);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      let start = 0;
-      const end = 50;
-      const duration = 1500;
-      const increment = end / (duration / 16);
-      const counter = setInterval(() => {
-        start += increment;
-        if (start >= end) {
-          setCount50(end);
-          clearInterval(counter);
-        } else {
-          setCount50(Math.floor(start));
+    const node = heroRef.current;
+    if (!node) return;
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          // Reset and rerun 50+
+          setCount50(0);
+          let s1 = 0;
+          const t1 = setInterval(() => {
+            s1 += 50 / (1500 / 16);
+            if (s1 >= 50) { setCount50(50); clearInterval(t1); }
+            else setCount50(Math.floor(s1));
+          }, 16);
+          // Reset and rerun 10X
+          setCount10(0);
+          let s2 = 0;
+          const t2 = setInterval(() => {
+            s2 += 10 / (1200 / 16);
+            if (s2 >= 10) { setCount10(10); clearInterval(t2); }
+            else setCount10(Math.floor(s2));
+          }, 16);
         }
-      }, 16);
-    }, 1200);
-    return () => clearTimeout(timer);
-  }, []);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      let start = 0;
-      const end = 10;
-      const duration = 1200;
-      const increment = end / (duration / 16);
-      const counter = setInterval(() => {
-        start += increment;
-        if (start >= end) {
-          setCount10(end);
-          clearInterval(counter);
-        } else {
-          setCount10(Math.floor(start));
-        }
-      }, 16);
-    }, 1500);
-    return () => clearTimeout(timer);
+      },
+      { threshold: 0.3 }
+    );
+    observer.observe(node);
+    return () => observer.disconnect();
   }, []);
 
   const testimonials = [
@@ -205,6 +198,7 @@ export default function App() {
 
       {/* Hero Section */}
       <section
+        ref={heroRef}
         id="home"
         className="relative h-screen flex flex-col items-center justify-center text-center px-4 overflow-hidden"
         style={{
@@ -247,25 +241,35 @@ export default function App() {
         />
 
         {/* Landing Animation Wrapper */}
-        <div className="z-40 max-w-6xl relative mt-[-15vh]">
+        <div
+          className="relative z-[5] flex flex-col items-center justify-center text-center px-6"
+          style={{
+            height: '100%',
+            paddingTop: '80px',
+            paddingBottom: '120px',
+            maxWidth: '900px',
+            margin: '0 auto',
+            gap: '16px',
+          }}
+        >
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1] }}
           >
-            <h1 className="font-display font-black tracking-tighter mb-8 uppercase" style={{ fontSize: 'clamp(2.2rem, 5.5vw, 5rem)', lineHeight: '1.05', color: '#ffffff' }}>
+            <h1 className="font-display font-black uppercase" style={{ fontSize: 'clamp(2.4rem, 5vw, 4.5rem)', lineHeight: '1.08', letterSpacing: '-0.01em', textAlign: 'center', color: '#ffffff', marginBottom: '0' }}>
               AI Systems <br />
               Built to Run <br />
               Your Business
             </h1>
           </motion.div>
-          
+
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1.5, delay: 0.8 }}
           >
-            <p className="uppercase font-bold leading-relaxed" style={{ color: 'rgba(255, 255, 255, 0.75)', fontSize: '13px', letterSpacing: '0.2em', textShadow: '0 1px 20px rgba(0,0,0,0.8)' }}>
+            <p className="uppercase font-bold" style={{ fontSize: '13px', letterSpacing: '0.18em', color: 'rgba(255,255,255,0.72)', textAlign: 'center', maxWidth: '480px', lineHeight: '2', marginTop: '0', textShadow: '0 1px 20px rgba(0,0,0,0.8)' }}>
               We engineer AI that handles the work <br />
               — so your team doesn't have to
             </p>
@@ -292,52 +296,52 @@ export default function App() {
         {/* Bottom Mist & Grounding */}
         <div className="absolute bottom-0 w-full h-1/2 bg-gradient-to-t from-[#050505] via-[#050505]/90 to-transparent z-[2] pointer-events-none" />
 
-        {/* Stats - Exact placement from image */}
-        <div className="absolute bottom-[15%] w-full max-w-5xl px-12 flex justify-between items-end z-50">
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-left"
-          >
-            <div className={`text-5xl md:text-7xl font-display font-black tracking-tighter ${isDarkMode ? 'text-white/90' : 'text-black/90'}`}>{count50}+</div>
-            <div className={`text-[9px] uppercase tracking-[0.3em] font-bold ${isDarkMode ? 'text-white/30' : 'text-black/30'}`}>AI Deployments</div>
-          </motion.div>
+        {/* 50+ Stat */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          className="absolute text-left z-50"
+          style={{ bottom: '18%', left: '8%' }}
+        >
+          <div className="text-5xl md:text-7xl font-display font-black tracking-tighter text-white/90">{count50}+</div>
+          <div className="text-[9px] uppercase tracking-[0.3em] font-bold text-white/30">AI Deployments</div>
+        </motion.div>
 
-          <motion.a
-            href="#contact"
-            className="inline-flex items-center gap-2 px-8 py-4 rounded-full text-white font-medium text-sm tracking-widest uppercase"
-            style={{
-              background: 'linear-gradient(135deg, #FF4D00, #CC2200)',
-              boxShadow: '0 0 30px rgba(255,77,0,0.4)',
-              position: 'absolute',
-              bottom: '8%',
-              left: '50%',
-              transform: 'translateX(-50%)',
-              whiteSpace: 'nowrap' as const,
-              zIndex: 20,
-              textDecoration: 'none',
-            }}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 1.8 }}
-            whileHover={{ scale: 1.04, boxShadow: '0 0 45px rgba(255,77,0,0.6)' }}
-          >
-            Get In Touch →
-          </motion.a>
+        {/* 10X Stat */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8, delay: 0.4 }}
+          className="absolute text-right z-50"
+          style={{ bottom: '26%', right: '8%' }}
+        >
+          <div className="text-5xl md:text-7xl font-display font-black tracking-tighter text-white/90">{count10}X</div>
+          <div className="text-[9px] uppercase tracking-[0.3em] font-bold text-white/30">Revenue Impact</div>
+        </motion.div>
 
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="text-right"
-          >
-            <div className={`text-5xl md:text-7xl font-display font-black tracking-tighter ${isDarkMode ? 'text-white/90' : 'text-black/90'}`}>{count10}X</div>
-            <div className={`text-[9px] uppercase tracking-[0.3em] font-bold ${isDarkMode ? 'text-white/30' : 'text-black/30'}`}>Revenue Impact</div>
-          </motion.div>
-        </div>
+        {/* CTA Button */}
+        <motion.a
+          href="#contact"
+          className="inline-flex items-center gap-2 px-8 py-4 rounded-full text-white font-medium text-sm tracking-widest uppercase absolute z-50"
+          style={{
+            background: 'linear-gradient(135deg, #FF4D00, #CC2200)',
+            boxShadow: '0 0 30px rgba(255,77,0,0.4)',
+            bottom: '6%',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            whiteSpace: 'nowrap' as const,
+            textDecoration: 'none',
+          }}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 1.8 }}
+          whileHover={{ scale: 1.04, boxShadow: '0 0 45px rgba(255,77,0,0.6)' }}
+        >
+          Get In Touch →
+        </motion.a>
 
         {/* Orange radial glow at base */}
         <div
