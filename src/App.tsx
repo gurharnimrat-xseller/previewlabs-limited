@@ -475,40 +475,27 @@ export default function App() {
       </section>
 
       {/* Footer */}
-      <footer className={`relative z-[60] py-40 px-6 border-t backdrop-blur-xl ${isDarkMode ? 'border-white/10 bg-black/40' : 'border-black/10 bg-white/40'}`}>
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start gap-24">
-          <div className="flex flex-col gap-8">
+      <footer className={`relative z-[60] py-16 px-6 border-t backdrop-blur-xl ${isDarkMode ? 'border-white/10 bg-black/40' : 'border-black/10 bg-white/40'}`}>
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-12">
+          <div className="flex flex-col gap-3">
             <div className="flex items-center gap-4">
-              <Hexagon className="w-16 h-16 text-brand-orange fill-brand-orange" />
-              <span className={`font-display font-black text-5xl tracking-tighter uppercase ${isDarkMode ? 'text-white' : 'text-black'}`}>Previewlabs</span>
+              <Hexagon className="w-10 h-10 text-brand-orange fill-brand-orange" />
+              <span className={`font-display font-black text-2xl tracking-tighter uppercase ${isDarkMode ? 'text-white' : 'text-black'}`}>Preview Labs</span>
             </div>
-            <p className={`max-w-sm text-sm font-bold uppercase tracking-widest leading-loose ${isDarkMode ? 'text-white/40' : 'text-black/40'}`}>
+            <p className={`text-[11px] font-bold uppercase tracking-[0.3em] ${isDarkMode ? 'text-white/40' : 'text-black/40'}`}>
               Preview Labs — AI automation and workflow systems.
             </p>
           </div>
-          
-          <div className={`flex flex-wrap gap-24 text-[12px] uppercase tracking-[0.4em] font-black ${isDarkMode ? 'text-white/40' : 'text-black/40'}`}>
-            <div className="flex flex-col gap-8">
-              <span className={isDarkMode ? 'text-white' : 'text-black'}>Product</span>
-              <button onClick={() => scrollToSection('features')} className="text-left hover:text-brand-orange transition-colors">Solutions</button>
-              <a href="#" className="hover:text-brand-orange transition-colors">Integrations</a>
-              <a href="#" className="hover:text-brand-orange transition-colors">Pricing</a>
-            </div>
-            <div className="flex flex-col gap-8">
-              <span className={isDarkMode ? 'text-white' : 'text-black'}>Company</span>
-              <button onClick={() => scrollToSection('team')} className="text-left hover:text-brand-orange transition-colors">About</button>
-              <a href="#" className="hover:text-brand-orange transition-colors">Careers</a>
-              <a href="#" className="hover:text-brand-orange transition-colors">Blog</a>
-            </div>
-            <div className="flex flex-col gap-8">
-              <span className={isDarkMode ? 'text-white' : 'text-black'}>Legal</span>
-              <a href="#" className="hover:text-brand-orange transition-colors">Privacy</a>
-              <a href="#" className="hover:text-brand-orange transition-colors">Terms</a>
-            </div>
+
+          <div className={`flex items-center gap-10 text-[11px] uppercase tracking-[0.3em] font-black ${isDarkMode ? 'text-white/50' : 'text-black/50'}`}>
+            <a href="#features" className="hover:text-brand-orange transition-colors">Solutions</a>
+            <a href="#xseller" className="hover:text-brand-orange transition-colors">Xseller.ai</a>
+            <a href="#about" className="hover:text-brand-orange transition-colors">About</a>
+            <a href="#contact" className="hover:text-brand-orange transition-colors">Contact</a>
           </div>
         </div>
-        <div className={`max-w-7xl mx-auto mt-40 pt-16 border-t text-[12px] uppercase tracking-[0.5em] text-center font-black ${isDarkMode ? 'border-white/10 text-white/20' : 'border-black/10 text-black/20'}`}>
-          © 2026 Preview Labs Limited. All rights reserved.
+        <div className={`max-w-7xl mx-auto mt-12 pt-8 border-t text-[11px] uppercase tracking-[0.4em] text-center font-black ${isDarkMode ? 'border-white/10 text-white/20' : 'border-black/10 text-black/20'}`}>
+          © 2026 Preview Labs Limited | Auckland, New Zealand
         </div>
       </footer>
 
