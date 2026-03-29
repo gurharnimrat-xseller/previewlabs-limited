@@ -172,11 +172,38 @@ export default function App() {
           backgroundSize: 'cover',
           backgroundPosition: 'center',
           backgroundRepeat: 'no-repeat',
+          paddingTop: '88px',
         }}
       >
         {/* Dark overlay for warm tone */}
         <div className="absolute inset-0 z-[1] pointer-events-none"
           style={{ backgroundColor: 'rgba(8,4,4,0.60)' }}
+        />
+
+        {/* Left cloud orange glow */}
+        <div
+          className="absolute pointer-events-none"
+          style={{
+            left: 0,
+            top: '30%',
+            width: '35%',
+            height: '55%',
+            background: 'radial-gradient(ellipse at 0% 60%, rgba(180,40,0,0.28) 0%, rgba(120,20,0,0.12) 50%, transparent 75%)',
+            zIndex: 2,
+          }}
+        />
+
+        {/* Right cloud orange glow */}
+        <div
+          className="absolute pointer-events-none"
+          style={{
+            right: 0,
+            top: '30%',
+            width: '35%',
+            height: '55%',
+            background: 'radial-gradient(ellipse at 100% 60%, rgba(180,40,0,0.28) 0%, rgba(120,20,0,0.12) 50%, transparent 75%)',
+            zIndex: 2,
+          }}
         />
 
         {/* Landing Animation Wrapper */}
@@ -186,7 +213,7 @@ export default function App() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1] }}
           >
-            <h1 className={`text-7xl md:text-[8.5rem] font-display font-black tracking-tighter leading-[0.8] mb-8 uppercase ${isDarkMode ? 'text-white' : 'text-black'}`}>
+            <h1 className={`font-display font-black tracking-tighter mb-8 uppercase ${isDarkMode ? 'text-white' : 'text-black'}`} style={{ fontSize: 'clamp(2.2rem, 5.5vw, 5rem)', lineHeight: '1.05' }}>
               AI Systems <br />
               Built to Run <br />
               Your Business
@@ -239,27 +266,25 @@ export default function App() {
           </motion.div>
 
           <motion.a
-            href="#solutions"
+            href="#contact"
+            className="inline-flex items-center gap-2 px-8 py-4 rounded-full text-white font-medium text-sm tracking-widest uppercase"
             style={{
+              background: 'linear-gradient(135deg, #FF4D00, #CC2200)',
+              boxShadow: '0 0 30px rgba(255,77,0,0.4)',
               position: 'absolute',
-              bottom: '7%',
+              bottom: '8%',
               left: '50%',
               transform: 'translateX(-50%)',
-              color: 'rgba(255,120,50,0.85)',
-              fontSize: '10px',
-              letterSpacing: '0.32em',
-              textTransform: 'uppercase' as const,
-              borderBottom: '1px solid rgba(255,120,50,0.45)',
-              paddingBottom: '2px',
-              textDecoration: 'none',
               whiteSpace: 'nowrap' as const,
               zIndex: 20,
+              textDecoration: 'none',
             }}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 2 }}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 1.8 }}
+            whileHover={{ scale: 1.04, boxShadow: '0 0 45px rgba(255,77,0,0.6)' }}
           >
-            Discover More
+            Get In Touch →
           </motion.a>
 
           <motion.div 
