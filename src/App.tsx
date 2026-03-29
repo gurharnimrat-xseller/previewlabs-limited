@@ -182,7 +182,7 @@ export default function App() {
         {/* Headline + Subheadline */}
         <div
           className="absolute left-0 right-0 flex flex-col items-center text-center px-6"
-          style={{ paddingTop: '22vh', zIndex: 10 }}
+          style={{ paddingTop: '22vh', zIndex: 15 }}
         >
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -246,8 +246,8 @@ export default function App() {
         <motion.div
           className="absolute left-1/2 -translate-x-1/2"
           style={{
-            top: '52%',
-            height: '48%',
+            top: '56%',
+            height: '44%',
             width: '80px',
             zIndex: 5,
             borderRadius: '3px',
@@ -263,8 +263,8 @@ export default function App() {
         <motion.div
           className="absolute left-1/2 -translate-x-1/2 pointer-events-none"
           style={{
-            top: '52%',
-            height: '48%',
+            top: '56%',
+            height: '44%',
             width: '30px',
             zIndex: 6,
             borderRadius: '2px',
@@ -281,8 +281,7 @@ export default function App() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.2 }}
-          className="absolute text-right"
-          style={{ top: '72%', left: 'calc(50% - 280px)', zIndex: 10 }}
+          style={{ position: 'absolute', bottom: '18%', left: '20%', zIndex: 10, textAlign: 'right' }}
         >
           <div className="text-5xl md:text-7xl font-display font-black tracking-tighter text-white/90">{count50}+</div>
           <div className="text-[9px] uppercase tracking-[0.3em] font-bold text-white/30">AI Deployments</div>
@@ -294,8 +293,7 @@ export default function App() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.4 }}
-          className="absolute text-left"
-          style={{ top: '58%', left: 'calc(50% + 120px)', zIndex: 10 }}
+          style={{ position: 'absolute', bottom: '30%', right: '18%', zIndex: 10, textAlign: 'left' }}
         >
           <div className="text-5xl md:text-7xl font-display font-black tracking-tighter text-white/90">{count10}X</div>
           <div className="text-[9px] uppercase tracking-[0.3em] font-bold text-white/30">Revenue Impact</div>
