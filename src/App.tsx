@@ -5,7 +5,8 @@
 
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, useScroll, useTransform, useAnimation, AnimatePresence, useSpring } from 'motion/react';
-import { Hexagon, ArrowRight, Menu, X, ChevronDown, Sun, Moon } from 'lucide-react';
+import { Hexagon, Menu, X, ChevronDown, Sun, Moon } from 'lucide-react';
+import PainNarrative from './PainNarrative';
 
 export default function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -84,7 +85,10 @@ export default function App() {
     restDelta: 0.001
   });
 
-  
+  // Cloud parallax: slow vertical shift on scroll
+  const cloudBgY = useTransform(scrollYProgress, [0, 1], ['0%', '6%']);
+
+
 
   const controls = useAnimation();
 
@@ -183,14 +187,15 @@ export default function App() {
       </nav>
 
       {/* Hero Section */}
-      <section
+      <motion.section
         ref={heroRef}
         id="home"
         className="relative h-screen flex flex-col items-center justify-center text-center px-4 overflow-hidden"
         style={{
           backgroundImage: 'url(/clouds-hero.jpg)',
           backgroundSize: 'cover',
-          backgroundPosition: 'center',
+          backgroundPositionX: 'center',
+          backgroundPositionY: cloudBgY,
           backgroundRepeat: 'no-repeat',
           paddingTop: '88px',
         }}
@@ -228,7 +233,7 @@ export default function App() {
 
         {/* Landing Animation Wrapper */}
         <div
-          className="relative z-[5] flex flex-col items-center justify-center text-center px-6"
+          className="relative z-[10] flex flex-col items-center justify-center text-center px-6"
           style={{
             height: '100%',
             paddingTop: '80px',
@@ -243,7 +248,7 @@ export default function App() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1] }}
           >
-            <h1 className="font-display font-black uppercase" style={{ fontSize: 'clamp(2.4rem, 5vw, 4.5rem)', lineHeight: '1.08', letterSpacing: '-0.01em', textAlign: 'center', color: '#ffffff', marginBottom: '0' }}>
+            <h1 className="font-display font-black uppercase" style={{ fontSize: 'clamp(2.4rem, 5vw, 3.825rem)', lineHeight: '1.08', letterSpacing: '-0.01em', textAlign: 'center', color: '#ffffff', marginBottom: '0', WebkitTextFillColor: '#ffffff' }}>
               AI Systems <br />
               Built to Run <br />
               Your Business
@@ -269,10 +274,11 @@ export default function App() {
             top: '52%',
             height: '48%',
             width: '140px',
-            zIndex: 10,
+            zIndex: 5,
             borderRadius: '4px',
             background: 'linear-gradient(to bottom, rgba(255,100,20,0.88), rgba(255,45,0,0.96), rgba(190,15,0,0.9))',
             boxShadow: '0 0 35px rgba(255,60,0,0.9), 0 0 80px rgba(255,40,0,0.55), 0 0 160px rgba(255,20,0,0.25)',
+            animation: 'pillarGlow 4s ease-in-out infinite',
           }}
           initial={{ scaleY: 0, opacity: 0 }}
           animate={{ scaleY: 1, opacity: 1 }}
@@ -339,80 +345,65 @@ export default function App() {
             filter: 'blur(10px)',
           }}
         />
-      </section>
+      </motion.section>
+
+      <PainNarrative />
 
       {/* Content Section */}
       <section id="features" className="relative z-[60] py-64 px-6 max-w-7xl mx-auto">
-        <div className="grid lg:grid-cols-2 gap-40 items-center">
-          <motion.div
-            initial={{ opacity: 0, y: 100, rotateX: 15 }}
-            whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
-            viewport={{ once: true, margin: "-150px" }}
-            transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1] }}
-          >
-            <h2 className={`text-6xl md:text-8xl font-display font-black tracking-tighter mb-12 uppercase leading-[0.85] drop-shadow-2xl ${isDarkMode ? 'text-white' : 'text-black'}`}>
-              What We <br />
-              <span className="text-brand-orange drop-shadow-[0_0_30px_rgba(255,77,0,0.4)]">Build</span>
-            </h2>
-            <p className={`text-xl leading-relaxed mb-16 max-w-2xl font-medium drop-shadow-lg ${isDarkMode ? 'text-white' : 'text-[#333]'}`}>
-              Preview Labs — AI automation and workflow systems.
-              We build intelligent systems that handle operations end-to-end,
-              so your team can focus on growth.
-            </p>
-            <div className="flex flex-wrap gap-8">
-              <motion.button 
-                whileHover={{ scale: 1.05, boxShadow: "0 0 40px rgba(255, 77, 0, 0.7)" }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => scrollToSection('contact')}
-                className="bg-brand-orange text-white px-14 py-7 rounded-full font-black uppercase tracking-[0.2em] text-sm hover:bg-white hover:text-brand-orange transition-all duration-500 flex items-center gap-4 group shadow-[0_0_60px_rgba(255,77,0,0.5)]"
-              >
-                Get in touch
-                <ArrowRight size={24} className="group-hover:translate-x-3 transition-transform" />
-              </motion.button>
-            </div>
-          </motion.div>
-          
-          <div className="grid grid-cols-2 gap-8">
-            {[
-              { val: "99.9%", label: "Uptime", h: "h-56" },
-              { val: "24/7", label: "Support", h: "h-72" },
-              { val: "Global", label: "Infrastructure", h: "h-72" },
-              { val: "Secure", label: "Encryption", h: "h-56" }
-            ].map((stat, i) => (
-              <motion.div 
-                key={i}
-                initial={{ opacity: 0, y: 100, scale: 0.8, rotateY: 20 }}
-                whileInView={{ opacity: 1, y: 0, scale: 1, rotateY: 0 }}
-                viewport={{ once: true, margin: "-100px" }}
-                transition={{ delay: i * 0.2, duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
-                className={`${stat.h} rounded-[3rem] border p-10 flex flex-col justify-end group transition-all duration-700 cursor-default shadow-2xl ${
-                  isDarkMode 
-                    ? 'bg-white/5 border-white/10 hover:bg-brand-orange/30 hover:border-brand-orange/50' 
-                    : 'bg-black/5 border-black/10 hover:bg-brand-orange/10 hover:border-brand-orange/30'
-                }`}
-              >
-                <div className="text-brand-orange font-black text-5xl mb-3 group-hover:scale-110 transition-transform origin-left drop-shadow-[0_0_10px_rgba(255,77,0,0.3)]">{stat.val}</div>
-                <div className={`text-[13px] uppercase tracking-[0.5em] font-black group-hover:text-white transition-colors ${isDarkMode ? 'text-white/50' : 'text-black/50'}`}>{stat.label}</div>
-              </motion.div>
-            ))}
-          </div>
+        <motion.div
+          initial={{ opacity: 0, y: 100, rotateX: 15 }}
+          whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
+          viewport={{ once: true, margin: "-150px" }}
+          transition={{ duration: 1.5, ease: [0.22, 1, 0.36, 1] }}
+          className="text-center mb-24"
+        >
+          <h2 className="text-6xl md:text-8xl font-display font-black tracking-tighter mb-12 uppercase leading-[0.85] drop-shadow-2xl text-white">
+            What We <br />
+            <span className="text-brand-orange drop-shadow-[0_0_30px_rgba(255,77,0,0.4)]">Build</span>
+          </h2>
+        </motion.div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {[
+            { title: 'AI Voice Reception', desc: 'Xseller.ai answers every call, qualifies leads, and books appointments — 24/7. No missed calls. No voicemail black holes.' },
+            { title: 'Workflow Automation', desc: 'We map your operations and automate the repeatable parts — data entry, follow-ups, reporting, approvals.' },
+            { title: 'Integration & Deploy', desc: 'We plug into your existing stack — Shopify, Xero, CRM, whatever you run. Scoping to live in 2–4 weeks.' },
+          ].map((card, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{ delay: i * 0.15, duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+              style={{
+                background: '#1A1A1A',
+                border: '1px solid rgba(255,255,255,0.08)',
+                borderRadius: '16px',
+                padding: '2rem',
+              }}
+            >
+              <h3 className="font-display font-black uppercase text-white text-lg tracking-wide mb-4">{card.title}</h3>
+              <p className="font-sans leading-relaxed" style={{ color: 'rgba(255,255,255,0.7)', fontSize: '15px' }}>{card.desc}</p>
+            </motion.div>
+          ))}
         </div>
       </section>
 
       {/* Workflow Section: Identify, Develop, Adopt */}
       <section id="services" className={`relative z-[60] py-64 px-6 max-w-7xl mx-auto border-t ${isDarkMode ? 'border-white/5' : 'border-black/5'}`}>
         <div className="text-center mb-32">
-          <h2 className={`text-5xl md:text-8xl font-display font-black tracking-tighter uppercase mb-8 ${isDarkMode ? 'text-white' : 'text-black'}`}>Our Workflow</h2>
+          <h2 className={`text-5xl md:text-8xl font-display font-black tracking-tighter uppercase mb-8 ${isDarkMode ? 'text-white' : 'text-black'}`}>How We Work</h2>
           <p className={`max-w-2xl mx-auto text-xl font-medium ${isDarkMode ? 'text-white/40' : 'text-black/40'}`}>
-            A systematic approach to integrating AI into your business architecture.
+            A focused three-step process. No fluff. No 12-month roadmaps.
           </p>
         </div>
         
         <div className="grid md:grid-cols-3 gap-12">
           {[
-            { title: "Identify", desc: "We analyze your existing infrastructure to find high-impact AI opportunities.", icon: "01" },
-            { title: "Develop", desc: "Our engineers build custom AI frameworks tailored to your specific data landscape.", icon: "02" },
-            { title: "Adopt", desc: "We integrate the AI solutions seamlessly into your daily operations and workflows.", icon: "03" }
+            { title: "Discover", desc: "We audit your current operations and find the automation opportunities with the highest ROI. We talk to the people doing the work — not just the people buying the tools.", icon: "01" },
+            { title: "Build", desc: "We engineer custom AI systems fitted to your actual workflow. Not off-the-shelf templates. Real systems, tested and deployed.", icon: "02" },
+            { title: "Launch", desc: "We deploy, train your team, and stay on for optimisation. By the time we step back, it's not a project — it's just how your business runs.", icon: "03" }
           ].map((card, i) => (
             <motion.div 
               key={i}
@@ -434,30 +425,16 @@ export default function App() {
         </div>
       </section>
 
-      {/* Team Section */}
-      <section id="team" className={`relative z-[60] py-64 px-6 max-w-7xl mx-auto border-t ${isDarkMode ? 'border-white/5' : 'border-black/5'}`}>
-        <div className="grid lg:grid-cols-2 gap-24 items-center">
-          <div>
-            <h2 className={`text-5xl md:text-8xl font-display font-black tracking-tighter uppercase mb-12 ${isDarkMode ? 'text-white' : 'text-black'}`}>About</h2>
-            <p className={`text-xl leading-relaxed font-medium mb-16 ${isDarkMode ? 'text-white/60' : 'text-black/60'}`}>
-              A focused team building AI systems for operators.
-            </p>
-            <div className="flex flex-wrap gap-8">
-              <motion.button 
-                whileHover={{ scale: 1.05, backgroundColor: isDarkMode ? "rgba(255, 255, 255, 0.1)" : "rgba(0, 0, 0, 0.05)" }}
-                whileTap={{ scale: 0.95 }}
-                className={`border-2 px-12 py-6 rounded-full font-black uppercase tracking-[0.2em] text-sm transition-all duration-500 ${
-                  isDarkMode ? 'border-white/20 text-white' : 'border-black/20 text-black'
-                }`}
-              >
-                Mission Partners
-              </motion.button>
-            </div>
-          </div>
-          <div className={`aspect-square rounded-[4rem] border flex items-center justify-center relative overflow-hidden ${isDarkMode ? 'bg-white/5 border-white/10' : 'bg-black/5 border-black/10'}`}>
-            <div className="absolute inset-0 bg-gradient-to-br from-brand-orange/20 to-transparent" />
-            <span className={`font-black uppercase tracking-[0.5em] relative z-10 ${isDarkMode ? 'text-white/20' : 'text-black/20'}`}>Team Previewlabs</span>
-          </div>
+      {/* About Section */}
+      <section id="team" className={`relative z-[60] px-6 border-t ${isDarkMode ? 'border-white/5' : 'border-black/5'}`} style={{ paddingTop: '6rem', paddingBottom: '6rem' }}>
+        <div style={{ maxWidth: '700px', marginLeft: 'auto', marginRight: 'auto' }}>
+          <h2 className={`text-5xl md:text-8xl font-display font-black tracking-tighter uppercase mb-12 ${isDarkMode ? 'text-white' : 'text-black'}`}>Who We Are</h2>
+          <p className={`text-xl leading-relaxed font-medium mb-8 ${isDarkMode ? 'text-white/60' : 'text-black/60'}`}>
+            Preview Labs is a focused AI automation agency based in Auckland. We don't sell software licences — we build systems that run your business operations. Founded by an operator who spent 15+ years in business before picking up AI, we approach every project from the business problem first, technology second.
+          </p>
+          <p className={`text-xl leading-relaxed font-medium ${isDarkMode ? 'text-white/60' : 'text-black/60'}`}>
+            Currently serving businesses across New Zealand and Australia.
+          </p>
         </div>
       </section>
 
