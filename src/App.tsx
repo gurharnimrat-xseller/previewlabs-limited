@@ -11,7 +11,6 @@ export default function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(true);
-  const [currentTestimonial, setCurrentTestimonial] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
   const heroRef = useRef<HTMLElement>(null);
   const [count50, setCount50] = useState(0);
@@ -45,19 +44,6 @@ export default function App() {
     );
     observer.observe(node);
     return () => observer.disconnect();
-  }, []);
-
-  const testimonials = [
-    { quote: "Previewlabs transformed our data strategy. Their AI framework is years ahead of anything we've seen.", name: "Sarah Chen", company: "TechFlow Systems" },
-    { quote: "The speed of deployment and the depth of insights provided by their team is unparalleled.", name: "Marcus Thorne", company: "Global Logistics" },
-    { quote: "A true partner in innovation. They didn't just give us a tool; they gave us a competitive edge.", name: "Elena Rodriguez", company: "FinTech Solutions" }
-  ];
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentTestimonial((prev) => (prev + 1) % testimonials.length);
-    }, 5000);
-    return () => clearInterval(interval);
   }, []);
 
   useEffect(() => {
@@ -444,42 +430,6 @@ export default function App() {
               <h3 className={`text-3xl font-display font-black uppercase mb-6 ${isDarkMode ? 'text-white' : 'text-black'}`}>{card.title}</h3>
               <p className={`text-lg leading-relaxed font-medium ${isDarkMode ? 'text-white/60' : 'text-black/60'}`}>{card.desc}</p>
             </motion.div>
-          ))}
-        </div>
-      </section>
-
-      {/* Testimonials Carousel */}
-      <section className={`relative z-[60] py-64 px-6 max-w-5xl mx-auto text-center`}>
-        <div className="relative h-[400px] flex items-center justify-center overflow-hidden">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={currentTestimonial}
-              initial={{ opacity: 0, scale: 0.9, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 1.1, y: -20 }}
-              transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-              className="absolute inset-0 flex flex-col items-center justify-center"
-            >
-              <div className={`text-3xl md:text-5xl font-display font-black italic tracking-tight mb-12 leading-tight ${isDarkMode ? 'text-white' : 'text-black'}`}>
-                "{testimonials[currentTestimonial].quote}"
-              </div>
-              <div className="flex flex-col items-center gap-2">
-                <div className="text-brand-orange font-black uppercase tracking-[0.3em] text-sm">{testimonials[currentTestimonial].name}</div>
-                <div className={`text-[10px] uppercase tracking-[0.5em] font-bold ${isDarkMode ? 'text-white/30' : 'text-black/30'}`}>{testimonials[currentTestimonial].company}</div>
-              </div>
-            </motion.div>
-          </AnimatePresence>
-        </div>
-        
-        <div className="flex justify-center gap-4 mt-8">
-          {testimonials.map((_, i) => (
-            <button 
-              key={i}
-              onClick={() => setCurrentTestimonial(i)}
-              className={`w-3 h-3 rounded-full transition-all duration-500 ${
-                currentTestimonial === i ? 'bg-brand-orange w-12' : (isDarkMode ? 'bg-white/10' : 'bg-black/10')
-              }`}
-            />
           ))}
         </div>
       </section>
