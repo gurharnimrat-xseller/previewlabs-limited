@@ -66,18 +66,6 @@ export default function App() {
   });
 
   
-  // Cloud Animations: Move apart dramatically on scroll with parallax
-  const leftCloudX = useTransform(smoothProgress, [0, 0.7], ["0%", "-200%"]);
-  const rightCloudX = useTransform(smoothProgress, [0, 0.7], ["0%", "200%"]);
-  const cloudY = useTransform(smoothProgress, [0, 1], ["0%", "30%"]);
-  const cloudScale = useTransform(smoothProgress, [0, 0.7], [1, 2.5]);
-  const cloudOpacity = useTransform(smoothProgress, [0, 0.5], [0.6, 0]);
-  const cloudBlur = useTransform(smoothProgress, [0, 0.4], ["0px", "40px"]);
-  const cloudBrightness = useTransform(smoothProgress, [0, 0.4], [0.5, 0.2]);
-
-  // Secondary background clouds for deeper parallax
-  const bgCloudY = useTransform(smoothProgress, [0, 1], ["0%", "15%"]);
-  const bgCloudOpacity = useTransform(smoothProgress, [0, 0.8], [0.15, 0]);
 
   const controls = useAnimation();
 
@@ -176,7 +164,21 @@ export default function App() {
       </nav>
 
       {/* Hero Section */}
-      <section id="home" className="relative h-screen flex flex-col items-center justify-center text-center px-4 overflow-hidden">
+      <section
+        id="home"
+        className="relative h-screen flex flex-col items-center justify-center text-center px-4 overflow-hidden"
+        style={{
+          backgroundImage: 'url(/clouds-hero.jpg)',
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+        }}
+      >
+        {/* Dark overlay for warm tone */}
+        <div className="absolute inset-0 z-[1] pointer-events-none"
+          style={{ backgroundColor: 'rgba(8,4,4,0.60)' }}
+        />
+
         {/* Landing Animation Wrapper */}
         <div className="z-40 max-w-6xl relative mt-[-15vh]">
           <motion.div
@@ -220,79 +222,8 @@ export default function App() {
           transition={{ duration: 1.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
         />
 
-        {/* Clouds Animation - Exactly matching the image composition */}
-        <div className="absolute inset-0 pointer-events-none z-10 overflow-hidden">
-          {/* Background Clouds (Subtle Parallax) */}
-          <motion.div 
-            style={{ y: bgCloudY, opacity: bgCloudOpacity }}
-            className="absolute inset-0"
-          >
-            <img
-              src="/clouds-hero.jpg"
-              alt="Background Cloud"
-              className="opacity-20 mix-blend-screen"
-              referrerPolicy="no-referrer"
-              style={{
-                position: 'absolute',
-                inset: 0,
-                width: '100%',
-                height: '100%',
-                objectFit: 'cover',
-                filter: 'brightness(0.32) saturate(0.9) sepia(0.7) hue-rotate(-20deg) contrast(1.1)'
-              }}
-            />
-          </motion.div>
-
-          {/* Left Cloud/Mountain Group */}
-          <motion.div 
-            style={{ x: leftCloudX, y: cloudY, scale: cloudScale, opacity: cloudOpacity }}
-            className="absolute left-0 bottom-0 w-full h-full"
-          >
-            <img
-              src="/clouds-hero.jpg"
-              alt="Cloud Left"
-              className="opacity-70 mix-blend-screen"
-              referrerPolicy="no-referrer"
-              style={{
-                position: 'absolute',
-                inset: 0,
-                width: '100%',
-                height: '100%',
-                objectFit: 'cover',
-                filter: 'brightness(0.32) saturate(0.9) sepia(0.7) hue-rotate(-20deg) contrast(1.1)'
-              }}
-            />
-            {/* Orange highlight on cloud edge */}
-            <div className="absolute left-[35%] bottom-[10%] w-[25%] h-[60%] bg-brand-orange/30 blur-[120px] rounded-full" />
-          </motion.div>
-
-          {/* Right Cloud/Mountain Group */}
-          <motion.div 
-            style={{ x: rightCloudX, y: cloudY, scale: cloudScale, opacity: cloudOpacity }}
-            className="absolute right-0 bottom-0 w-full h-full"
-          >
-            <img
-              src="/clouds-hero.jpg"
-              alt="Cloud Right"
-              className="opacity-70 mix-blend-screen"
-              referrerPolicy="no-referrer"
-              style={{
-                position: 'absolute',
-                inset: 0,
-                width: '100%',
-                height: '100%',
-                objectFit: 'cover',
-                filter: 'brightness(0.32) saturate(0.9) sepia(0.7) hue-rotate(-20deg) contrast(1.1)',
-                transform: 'scaleX(-1)'
-              }}
-            />
-            {/* Orange highlight on cloud edge */}
-            <div className="absolute right-[35%] bottom-[10%] w-[25%] h-[60%] bg-brand-orange/30 blur-[120px] rounded-full" />
-          </motion.div>
-
-          {/* Bottom Mist & Grounding */}
-          <div className="absolute bottom-0 w-full h-1/2 bg-gradient-to-t from-[#050505] via-[#050505]/90 to-transparent z-30" />
-        </div>
+        {/* Bottom Mist & Grounding */}
+        <div className="absolute bottom-0 w-full h-1/2 bg-gradient-to-t from-[#050505] via-[#050505]/90 to-transparent z-[2] pointer-events-none" />
 
         {/* Stats - Exact placement from image */}
         <div className="absolute bottom-[15%] w-full max-w-5xl px-12 flex justify-between items-end z-50">
