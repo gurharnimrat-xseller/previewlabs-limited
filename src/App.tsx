@@ -83,6 +83,9 @@ export default function App() {
   // Cloud parallax: slow vertical shift on scroll
   const cloudBgY = useTransform(scrollYProgress, [0, 1], ['0%', '6%']);
 
+  // Pillar scroll animation: slides down as user scrolls past hero
+  const pillarY = useTransform(scrollYProgress, [0, 0.15], ['0%', '80%']);
+
 
 
   const controls = useAnimation();
@@ -142,7 +145,7 @@ export default function App() {
             whileTap={{ scale: 0.95 }}
             className="hidden md:block px-6 py-2.5 rounded-full text-[10px] uppercase tracking-[0.3em] font-black text-white"
             style={{
-              background: 'linear-gradient(to right, #FF4D00, #CC2200)',
+              background: '#FF4D00',
               textDecoration: 'none',
             }}
           >
@@ -230,45 +233,19 @@ export default function App() {
           </motion.div>
         </div>
 
-        {/* Pillar glow — radial gradient behind pillar */}
-        <div
-          className="absolute left-1/2 -translate-x-1/2 pointer-events-none"
-          style={{
-            bottom: 0,
-            width: '600px',
-            height: '400px',
-            background: 'radial-gradient(ellipse at 50% 80%, rgba(255,77,0,0.4) 0%, transparent 60%)',
-            zIndex: 4,
-          }}
-        />
-
-        {/* Orange Pillar — layered for depth */}
+        {/* Orange Pillar */}
         <motion.div
           className="absolute left-1/2 -translate-x-1/2"
           style={{
-            top: '56%',
-            height: '44%',
+            top: '62%',
+            height: '38%',
             width: '80px',
             zIndex: 5,
-            borderRadius: '3px',
+            borderRadius: '4px 4px 0 0',
             background: '#FF4D00',
             boxShadow: '0 0 30px rgba(255,60,0,0.7), 0 0 60px rgba(255,40,0,0.4)',
             animation: 'pillarGlow 4s ease-in-out infinite',
-          }}
-          initial={{ scaleY: 0, opacity: 0 }}
-          animate={{ scaleY: 1, opacity: 1 }}
-          transition={{ duration: 1.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-        />
-        {/* Pillar bright center strip */}
-        <motion.div
-          className="absolute left-1/2 -translate-x-1/2 pointer-events-none"
-          style={{
-            top: '56%',
-            height: '44%',
-            width: '30px',
-            zIndex: 6,
-            borderRadius: '2px',
-            background: 'linear-gradient(to bottom, rgba(255,255,255,0.6), #FF4D00)',
+            y: pillarY,
           }}
           initial={{ scaleY: 0, opacity: 0 }}
           animate={{ scaleY: 1, opacity: 1 }}
@@ -299,24 +276,31 @@ export default function App() {
           <div className="text-[9px] uppercase tracking-[0.3em] font-bold text-white/30">Revenue Impact</div>
         </motion.div>
 
-        {/* CTA — subtle text link at bottom */}
+        {/* CTA Button */}
         <motion.a
           href="#contact"
-          className="absolute uppercase font-bold"
+          className="absolute"
           style={{
-            fontSize: '12px',
-            letterSpacing: '0.2em',
-            color: 'rgba(255,255,255,0.6)',
-            bottom: '8%',
+            background: '#FF4D00',
+            color: '#FFFFFF',
+            padding: '14px 36px',
+            borderRadius: '8px',
+            fontSize: '13px',
+            letterSpacing: '0.15em',
+            fontWeight: '600',
+            textTransform: 'uppercase' as const,
+            border: 'none',
+            cursor: 'pointer',
+            zIndex: 15,
+            bottom: '10%',
             left: '50%',
             transform: 'translateX(-50%)',
             textDecoration: 'none',
-            zIndex: 10,
           }}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 1.8 }}
-          whileHover={{ color: 'rgba(255,255,255,1)' }}
+          whileHover={{ scale: 1.04 }}
         >
           Get In Touch
         </motion.a>
