@@ -113,16 +113,12 @@ export default function App() {
       <div className={`grainy-bg transition-opacity duration-700 ${isDarkMode ? 'opacity-100' : 'opacity-20'}`} />
       
       {/* Navigation */}
-      <nav className={`fixed top-0 left-0 w-full z-[90] transition-all duration-500 flex justify-center items-center ${isScrolled ? 'py-6' : 'py-10'}`}>
-        <motion.div 
+      <nav className="fixed top-0 left-0 w-full z-50 flex justify-center items-center py-6">
+        <motion.div
           initial={{ y: -100, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 1, ease: [0.22, 1, 0.36, 1] }}
-          className={`flex items-center gap-8 backdrop-blur-2xl px-8 py-3 rounded-full border transition-all duration-500 ${
-            isScrolled 
-              ? (isDarkMode ? 'bg-black/80 border-white/10 shadow-[0_10px_30px_rgba(0,0,0,0.8)]' : 'bg-white/80 border-black/10 shadow-[0_10px_30px_rgba(0,0,0,0.1)]')
-              : (isDarkMode ? 'bg-black/60 border-white/20 shadow-[0_20px_50px_rgba(0,0,0,0.5)]' : 'bg-white/60 border-black/20 shadow-[0_20px_50px_rgba(0,0,0,0.05)]')
-          }`}
+          className="flex items-center gap-8 px-8 py-3"
         >
           <div className="flex items-center gap-4 cursor-pointer" onClick={() => scrollToSection('home')}>
             <div className="w-10 h-10 bg-brand-orange rounded-xl flex items-center justify-center font-display font-black text-white text-xl shadow-[0_0_20px_rgba(255,77,0,0.4)]">P.</div>
@@ -166,51 +162,27 @@ export default function App() {
       <motion.section
         ref={heroRef}
         id="home"
-        className="relative h-screen flex flex-col items-center justify-center text-center px-4 overflow-hidden"
+        className="relative h-screen overflow-hidden"
         style={{
           backgroundImage: 'url(/clouds-hero.jpg)',
           backgroundSize: 'cover',
           backgroundPositionX: 'center',
           backgroundPositionY: cloudBgY,
           backgroundRepeat: 'no-repeat',
-          paddingTop: '88px',
         }}
       >
-        {/* Dark overlay for warm tone */}
-        <div className="absolute inset-0 z-[1] pointer-events-none"
-          style={{ backgroundColor: 'rgba(8,4,4,0.60)' }}
-        />
-
-        {/* Left cloud orange glow */}
+        {/* Gradient overlay — dark top/bottom, clouds show through middle */}
         <div
-          className="absolute pointer-events-none"
+          className="absolute inset-0 z-[1] pointer-events-none"
           style={{
-            left: 0,
-            top: '30%',
-            width: '35%',
-            height: '55%',
-            background: 'radial-gradient(ellipse at 0% 60%, rgba(180,40,0,0.28) 0%, rgba(120,20,0,0.12) 50%, transparent 75%)',
-            zIndex: 2,
+            background: 'linear-gradient(to bottom, rgba(10,10,10,0.7) 0%, rgba(10,10,10,0.3) 40%, rgba(10,10,10,0.2) 60%, rgba(10,10,10,0.8) 100%)',
           }}
         />
 
-        {/* Right cloud orange glow */}
-        <div
-          className="absolute pointer-events-none"
-          style={{
-            right: 0,
-            top: '30%',
-            width: '35%',
-            height: '55%',
-            background: 'radial-gradient(ellipse at 100% 60%, rgba(180,40,0,0.28) 0%, rgba(120,20,0,0.12) 50%, transparent 75%)',
-            zIndex: 2,
-          }}
-        />
-
-        {/* Headline + Subheadline — upper 35-40% of viewport */}
+        {/* Headline + Subheadline */}
         <div
           className="absolute left-0 right-0 flex flex-col items-center text-center px-6"
-          style={{ top: '12%', zIndex: 10 }}
+          style={{ paddingTop: '22vh', zIndex: 10 }}
         >
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -220,13 +192,12 @@ export default function App() {
             <h1
               className="font-display font-black uppercase"
               style={{
-                fontSize: 'clamp(2.4rem, 5vw, 3.825rem)',
+                fontSize: 'clamp(2.5rem, 5.5vw, 4.5rem)',
                 lineHeight: '1.08',
                 letterSpacing: '-0.01em',
                 textAlign: 'center',
                 color: '#ffffff',
                 WebkitTextFillColor: '#ffffff',
-                marginBottom: '0',
               }}
             >
               AI Systems <br />
@@ -259,73 +230,97 @@ export default function App() {
           </motion.div>
         </div>
 
-        {/* Orange Pillar Bar — starts at 50%, extends to bottom */}
+        {/* Pillar glow — radial gradient behind pillar */}
+        <div
+          className="absolute left-1/2 -translate-x-1/2 pointer-events-none"
+          style={{
+            bottom: 0,
+            width: '600px',
+            height: '400px',
+            background: 'radial-gradient(ellipse at 50% 80%, rgba(255,77,0,0.4) 0%, transparent 60%)',
+            zIndex: 4,
+          }}
+        />
+
+        {/* Orange Pillar — layered for depth */}
         <motion.div
           className="absolute left-1/2 -translate-x-1/2"
           style={{
-            top: '50%',
-            height: '50%',
-            width: '140px',
+            top: '52%',
+            height: '48%',
+            width: '80px',
             zIndex: 5,
-            borderRadius: '4px',
-            background: 'linear-gradient(to bottom, rgba(255,100,20,0.88), rgba(255,45,0,0.96), rgba(190,15,0,0.9))',
-            boxShadow: '0 0 35px rgba(255,60,0,0.9), 0 0 80px rgba(255,40,0,0.55), 0 0 160px rgba(255,20,0,0.25)',
+            borderRadius: '3px',
+            background: '#FF4D00',
+            boxShadow: '0 0 30px rgba(255,60,0,0.7), 0 0 60px rgba(255,40,0,0.4)',
             animation: 'pillarGlow 4s ease-in-out infinite',
           }}
           initial={{ scaleY: 0, opacity: 0 }}
           animate={{ scaleY: 1, opacity: 1 }}
           transition={{ duration: 1.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
         />
+        {/* Pillar bright center strip */}
+        <motion.div
+          className="absolute left-1/2 -translate-x-1/2 pointer-events-none"
+          style={{
+            top: '52%',
+            height: '48%',
+            width: '30px',
+            zIndex: 6,
+            borderRadius: '2px',
+            background: 'linear-gradient(to bottom, rgba(255,255,255,0.6), #FF4D00)',
+          }}
+          initial={{ scaleY: 0, opacity: 0 }}
+          animate={{ scaleY: 1, opacity: 1 }}
+          transition={{ duration: 1.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+        />
 
-        {/* Bottom Mist & Grounding */}
-        <div className="absolute bottom-0 w-full h-1/2 bg-gradient-to-t from-[#0A0A0A] via-[#0A0A0A]/90 to-transparent z-[2] pointer-events-none" />
-
-        {/* 50+ Stat — left of pillar, ~65% down */}
+        {/* 50+ Stat — left of pillar, lower */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.2 }}
           className="absolute text-left"
-          style={{ top: '65%', left: '8%', zIndex: 10 }}
+          style={{ top: '68%', left: 'calc(50% - 250px)', zIndex: 10 }}
         >
           <div className="text-5xl md:text-7xl font-display font-black tracking-tighter text-white/90">{count50}+</div>
           <div className="text-[9px] uppercase tracking-[0.3em] font-bold text-white/30">AI Deployments</div>
         </motion.div>
 
-        {/* 10X Stat — right of pillar, ~55% down */}
+        {/* 10X Stat — right of pillar, higher */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8, delay: 0.4 }}
           className="absolute text-right"
-          style={{ top: '55%', right: '8%', zIndex: 10 }}
+          style={{ top: '52%', left: 'calc(50% + 120px)', zIndex: 10 }}
         >
           <div className="text-5xl md:text-7xl font-display font-black tracking-tighter text-white/90">{count10}X</div>
           <div className="text-[9px] uppercase tracking-[0.3em] font-bold text-white/30">Revenue Impact</div>
         </motion.div>
 
-        {/* CTA Button — bottom center, small and clean */}
+        {/* CTA — subtle text link at bottom */}
         <motion.a
           href="#contact"
-          className="absolute px-6 py-3 rounded-full text-white font-medium text-xs tracking-widest uppercase"
+          className="absolute uppercase font-bold"
           style={{
-            background: 'linear-gradient(135deg, #FF4D00, #CC2200)',
-            boxShadow: '0 0 20px rgba(255,77,0,0.3)',
+            fontSize: '12px',
+            letterSpacing: '0.2em',
+            color: 'rgba(255,255,255,0.6)',
             bottom: '8%',
             left: '50%',
             transform: 'translateX(-50%)',
-            whiteSpace: 'nowrap' as const,
             textDecoration: 'none',
             zIndex: 10,
           }}
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 1.8 }}
-          whileHover={{ scale: 1.04, boxShadow: '0 0 35px rgba(255,77,0,0.5)' }}
+          whileHover={{ color: 'rgba(255,255,255,1)' }}
         >
-          Get In Touch →
+          Get In Touch
         </motion.a>
 
       </motion.section>
