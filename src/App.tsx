@@ -434,19 +434,6 @@ export default function App() {
         </div>
       </section>
 
-      {/* Partners Logo Scroll */}
-      <section className={`relative z-[60] py-40 border-y overflow-hidden ${isDarkMode ? 'border-white/5 bg-white/[0.02]' : 'border-black/5 bg-black/[0.02]'}`}>
-        <div className="flex whitespace-nowrap animate-marquee">
-          {[
-            "Google", "Anthropic", "OpenAI", "DeepMind", "Mistral", "Meta", "NVIDIA", "Microsoft", "Amazon", "Cohere"
-          ].concat(["Google", "Anthropic", "OpenAI", "DeepMind", "Mistral", "Meta", "NVIDIA", "Microsoft", "Amazon", "Cohere"]).map((logo, i) => (
-            <div key={i} className={`mx-20 text-4xl font-display font-black uppercase tracking-tighter ${isDarkMode ? 'text-white/20' : 'text-black/20'}`}>
-              {logo}
-            </div>
-          ))}
-        </div>
-      </section>
-
       {/* Team Section */}
       <section id="team" className={`relative z-[60] py-64 px-6 max-w-7xl mx-auto border-t ${isDarkMode ? 'border-white/5' : 'border-black/5'}`}>
         <div className="grid lg:grid-cols-2 gap-24 items-center">
