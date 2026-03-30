@@ -238,7 +238,7 @@ export default function App() {
           className="absolute left-1/2 -translate-x-1/2"
           style={{
             top: '66%',
-            height: '34%',
+            height: '28%',
             width: '80px',
             zIndex: 5,
             borderRadius: '4px 4px 0 0',
@@ -291,9 +291,8 @@ export default function App() {
             textTransform: 'uppercase' as const,
             border: 'none',
             cursor: 'pointer',
-            zIndex: 15,
-            bottom: '3%',
-            marginTop: '0',
+            zIndex: 20,
+            bottom: '2%',
             left: '50%',
             transform: 'translateX(-50%)',
             textDecoration: 'none',
