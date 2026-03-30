@@ -224,7 +224,7 @@ export default function App() {
                 textAlign: 'center',
                 maxWidth: '480px',
                 lineHeight: '2',
-                textShadow: '0 1px 20px rgba(0,0,0,0.8)',
+                textShadow: '0 2px 20px rgba(0,0,0,0.8)',
               }}
             >
               We engineer AI that handles the work <br />
@@ -237,8 +237,8 @@ export default function App() {
         <motion.div
           className="absolute left-1/2 -translate-x-1/2"
           style={{
-            top: '62%',
-            height: '38%',
+            top: '66%',
+            height: '34%',
             width: '80px',
             zIndex: 5,
             borderRadius: '4px 4px 0 0',
@@ -292,7 +292,8 @@ export default function App() {
             border: 'none',
             cursor: 'pointer',
             zIndex: 15,
-            bottom: '10%',
+            bottom: '3%',
+            marginTop: '0',
             left: '50%',
             transform: 'translateX(-50%)',
             textDecoration: 'none',
